@@ -1,0 +1,18 @@
+create table building(
+bno bigint not null auto_increment,
+aptName varchar(100) not null,
+aptDong varchar(10) not null,
+aptHo varchar(10) not null,
+aptType varchar(10) not null,
+aptSize int not null,
+aptDirection varchar(10) not null,
+aptTransactionType varchar(10) not null,
+aptPrice int not null,
+aptOption varchar(100) not null,
+aptNote varchar(100) not null,
+ownerName varchar(20) not null,
+ownerPhone varchar(20) not null,
+ownerMobileCarrier varchar(10) not null,
+constraint building_PK primary key(bno)
+);
+
