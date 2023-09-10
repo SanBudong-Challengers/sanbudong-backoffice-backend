@@ -50,7 +50,7 @@ public class BuildingController {
     public String add(BuildingForm buildingForm) {
         Building building = new Building();
 
-        building.setAptNote(buildingForm.getAptName());
+        building.setAptName(buildingForm.getAptName());
         building.setAptDong(buildingForm.getAptDong());
         building.setAptHo(buildingForm.getAptHo());
         building.setAptType(buildingForm.getAptType());
