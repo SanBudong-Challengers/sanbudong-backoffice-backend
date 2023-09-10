@@ -6,10 +6,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,7 +76,7 @@ public class BuildingController {
         return "editForm";
     }
 
-    @PostMapping("/{bno}/edit")
+    @PutMapping("/{bno}/edit")
     public String edit(@PathVariable("bno") Long bno, BuildingForm buildingForm) {
         Building building = buildingService.findByBno(bno);
 
@@ -102,7 +99,7 @@ public class BuildingController {
         return "redirect:/";
     }
 
-    @GetMapping("/{bno}/delete")
+    @DeleteMapping("/{bno}/delete")
     public String delete(@PathVariable("bno") Long bno){
         buildingService.deleteOne(bno);
         return "redirect:/";
