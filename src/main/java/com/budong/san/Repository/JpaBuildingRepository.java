@@ -24,7 +24,7 @@ public class JpaBuildingRepository implements BuildingRepository {
 
     @Override
     public Building edit(Building building) {
-        em.createQuery("update Building b set b.aptName = :aptName, b.aptDong = :aptDong, b.aptHo = :aptHo, b.aptType = :aptType, b.aptSize = :aptSize, b.aptDirection = :aptDirection, b.aptTransactionType = :aptTransactionType, b.aptPrice = :aptPrice, b.aptOption = :aptOption, b.aptNote = :aptNote, b.ownerName = :ownerName, b.ownerPhone = :ownerPhone, b.ownerMobileCarrier = :ownerMobileCarrier")
+        em.createQuery("update Building b set b.aptName = :aptName, b.aptDong = :aptDong, b.aptHo = :aptHo, b.aptType = :aptType, b.aptSize = :aptSize, b.aptDirection = :aptDirection, b.aptTransactionType = :aptTransactionType, b.aptPrice = :aptPrice, b.aptOption = :aptOption, b.aptNote = :aptNote, b.ownerName = :ownerName, b.ownerPhone = :ownerPhone, b.ownerMobileCarrier = :ownerMobileCarrier where b.bno = :bno")
                 .setParameter("aptName",building.getAptName())
                 .setParameter("aptDong",building.getAptDong())
                 .setParameter("aptHo",building.getAptHo())
@@ -38,6 +38,7 @@ public class JpaBuildingRepository implements BuildingRepository {
                 .setParameter("ownerName", building.getOwnerName())
                 .setParameter("ownerPhone", building.getOwnerPhone())
                 .setParameter("ownerMobileCarrier", building.getOwnerMobileCarrier())
+                .setParameter("bno",building.getBno())
                 .executeUpdate();
         return building;
     }
@@ -50,6 +51,7 @@ public class JpaBuildingRepository implements BuildingRepository {
     @Override
     public Building findByBno(Long bno) {
         Building building = em.createQuery("select b from Building b where b.bno = :bno",Building.class).setParameter("bno",bno).getSingleResult();
+        System.out.println(building.getBno());
         return building;
     }
 
