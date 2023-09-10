@@ -20,6 +20,15 @@ public class BuildingService {
         return building.getBno();
     }
 
+    public Long edit(Building building){
+        buildingRepository.edit(building);
+        return building.getBno();
+    }
+
+    public Building findByBno(Long bno){
+        return buildingRepository.findByBno(bno);
+    }
+
     public List<Building> findBuildings(){
         return buildingRepository.findAll();
     }

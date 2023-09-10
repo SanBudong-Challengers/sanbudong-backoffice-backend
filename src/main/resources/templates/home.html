@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>게시판</h1>
+<button type="button" onclick="location.href='makePost'">작성하기</button>
+
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th style="width:30px">#</th>
+                <th style="width:100px ">아파트 이름</th>
+                <th style="width:100px">동</th>
+                <th style="width:100px">호</th>
+                <th style="width:100px">타입</th>
+                <th style="width:100px">평수</th>
+                <th style="width:100px">방향</th>
+                <th style="width:100px">매매/전세/월세</th>
+                <th style="width:100px">가격</th>
+                <th style="width:100px">옵션</th>
+                <th style="width:100px">비고</th>
+                <th style="width:100px">소유자 이름</th>
+                <th style="width:100px">소유자 전화번호</th>
+                <th style="width:100px">소유자 통신사</th>
+                <th>지우기</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="building : ${buildings}">
+                <!--<td th:text="${board.bnum}" style="text-align:center" ></td>
+                <td style="text-align:center"><a th:href="@{/board/{bnum}(bnum=${board.bnum})}" th:text="${board.bsubject}">제목</a></td>-->
+                <td th:text="${building.bno}" style="text-align:center"></td>
+                <td th:text="${building.aptName}" style="text-align:center"></td>
+                <td th:text="${building.aptDong}" style="text-align:center"></td>
+                <td th:text="${building.aptHo}" style="text-align:center"></td>
+                <td th:text="${building.aptType}" style="text-align:center"></td>
+                <td th:text="${building.aptSize}" style="text-align:center"></td>
+                <td th:text="${building.aptDirection}" style="text-align:center"></td>
+                <td th:text="${building.aptTransactionType}" style="text-align:center"></td>
+                <td th:text="${building.aptPrice}" style="text-align:center"></td>
+                <td th:text="${building.aptOption}" style="text-align:center"></td>
+                <td th:text="${building.aptNote}" style="text-align:center"></td>
+                <td th:text="${building.ownerName}" style="text-align:center"></td>
+                <td th:text="${building.ownerPhone}" style="text-align:center"></td>
+                <td th:text="${building.ownerMobileCarrier}" style="text-align:center"></td>
+                <td><button><a th:href="@{/{bno}/delete(bno=${building.bno})}">X</a></button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

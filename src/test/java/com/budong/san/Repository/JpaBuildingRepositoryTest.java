@@ -68,7 +68,7 @@ public class JpaBuildingRepositoryTest {
 
     @Test
     public void search(){
-        List<Building> buildings = buildingService.findBySelection("",12,20,"7",10,20);
+        List<Building> buildings = buildingService.findBySelection("1",3,10,"7",5,10);
         for(Building building1 : buildings){
             System.out.println(building1.getBno());
         }

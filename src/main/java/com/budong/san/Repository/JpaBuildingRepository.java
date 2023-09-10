@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
-public class JpaBuildingRepository implements BuildingRepository{
+public class JpaBuildingRepository implements BuildingRepository {
 
     private final EntityManager em;
 
@@ -24,7 +24,22 @@ public class JpaBuildingRepository implements BuildingRepository{
 
     @Override
     public Building edit(Building building) {
-        return null;
+        em.createQuery("update Building b set b.aptName = :aptName, b.aptDong = :aptDong, b.aptHo = :aptHo, b.aptType = :aptType, b.aptSize = :aptSize, b.aptDirection = :aptDirection, b.aptTransactionType = :aptTransactionType, b.aptPrice = :aptPrice, b.aptOption = :aptOption, b.aptNote = :aptNote, b.ownerName = :ownerName, b.ownerPhone = :ownerPhone, b.ownerMobileCarrier = :ownerMobileCarrier")
+                .setParameter("aptName",building.getAptName())
+                .setParameter("aptDong",building.getAptDong())
+                .setParameter("aptHo",building.getAptHo())
+                .setParameter("aptType",building.getAptType())
+                .setParameter("aptSize", building.getAptSize())
+                .setParameter("aptDirection",building.getAptDirection())
+                .setParameter("aptTransactionType", building.getAptTransactionType())
+                .setParameter("aptPrice", building.getAptPrice())
+                .setParameter("aptOption", building.getAptOption())
+                .setParameter("aptNote", building.getAptNote())
+                .setParameter("ownerName", building.getOwnerName())
+                .setParameter("ownerPhone", building.getOwnerPhone())
+                .setParameter("ownerMobileCarrier", building.getOwnerMobileCarrier())
+                .executeUpdate();
+        return building;
     }
 
     @Override
@@ -33,37 +48,16 @@ public class JpaBuildingRepository implements BuildingRepository{
     }
 
     @Override
-    public List<Building> findByName(String aptName) {
-        return em.createQuery("select b from Building b where b.aptName = :aptName", Building.class)
-                .setParameter("aptName", aptName)
-                .getResultList();
-    }
-
-    @Override
-    public List<Building> findByAptSize(int aptSize) {
-        return null;
-    }
-
-    @Override
-    public List<Building> findByTransactionType(String aptTransactionType) {
-        return em.createQuery("select b from Building b where b.aptTransactionType = :aptTransactionType", Building.class)
-                .setParameter("aptTransactionType", aptTransactionType)
-                .getResultList();
-    }
-
-    @Override
-    public List<Building> findByAptPrice(int min, int max) {
-        return em.createQuery("select b from Building b where b.aptPrice >= :min and b.aptPrice <= :max", Building.class)
-                .setParameter("min", min)
-                .setParameter("max", max)
-                .getResultList();
+    public Building findByBno(Long bno) {
+        Building building = em.createQuery("select b from Building b where b.bno = :bno",Building.class).setParameter("bno",bno).getSingleResult();
+        return building;
     }
 
     @Override
     public void deleteOne(Long bno) {
         // 얘는 반환하는 애가 없기 때문에 query문 끝에 .class를 안 넣어도 됨
         em.createQuery("delete from Building b where b.bno = :bno")
-                .setParameter("bno",bno)
+                .setParameter("bno", bno)
                 .executeUpdate();
     }
 
@@ -119,5 +113,33 @@ public class JpaBuildingRepository implements BuildingRepository{
 
     }
 
+/*
 
+    @Override
+    public List<Building> findByName(String aptName) {
+        return em.createQuery("select b from Building b where b.aptName = :aptName", Building.class)
+                .setParameter("aptName", aptName)
+                .getResultList();
+    }
+
+    @Override
+    public List<Building> findByAptSize(int aptSize) {
+        return null;
+    }
+
+    @Override
+    public List<Building> findByTransactionType(String aptTransactionType) {
+        return em.createQuery("select b from Building b where b.aptTransactionType = :aptTransactionType", Building.class)
+                .setParameter("aptTransactionType", aptTransactionType)
+                .getResultList();
+    }
+
+    @Override
+    public List<Building> findByAptPrice(int min, int max) {
+        return em.createQuery("select b from Building b where b.aptPrice >= :min and b.aptPrice <= :max", Building.class)
+                .setParameter("min", min)
+                .setParameter("max", max)
+                .getResultList();
+    }
+*/
 }

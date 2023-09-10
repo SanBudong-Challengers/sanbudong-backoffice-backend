@@ -11,11 +11,13 @@ import java.util.Optional;
 public interface BuildingRepository{
     Building save(Building building);
     Building edit(Building building);
+    Building findByBno(Long bno);
     List<Building> findAll();
-    List<Building> findByName(String aptName);
-    List<Building> findByAptSize(int aptSize);
-    List<Building> findByTransactionType(String aptTransactionType);
-    List<Building> findByAptPrice(int min, int max);
     void deleteOne(Long bno);
     List<Building> findBySelection(String aptName, int aptSizeMin,int aptSizeMax, String aptTransactionType, int aptPriceMin, int aptPriceMax);
+
+    /*List<Building> findByName(String aptName);
+    List<Building> findByAptSize(int aptSize);
+    List<Building> findByTransactionType(String aptTransactionType);
+    List<Building> findByAptPrice(int min, int max);*/
 }
