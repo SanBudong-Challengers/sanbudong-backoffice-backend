@@ -80,7 +80,7 @@ public class BuildingController {
     public String edit(@PathVariable("bno") Long bno, BuildingForm buildingForm) {
         Building building = buildingService.findByBno(bno);
 
-        building.setAptNote(buildingForm.getAptName());
+        building.setAptName(buildingForm.getAptName());
         building.setAptDong(buildingForm.getAptDong());
         building.setAptHo(buildingForm.getAptHo());
         building.setAptType(buildingForm.getAptType());
