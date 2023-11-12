@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Api(tags="ddd")
+@Api(tags="Building Controller")
 @Controller
 public class BuildingController {
     private final BuildingService buildingService;
@@ -29,13 +29,21 @@ public class BuildingController {
     }
 
     @GetMapping("/option")
-    public String option(@RequestParam("aptName") String aptName,
-                         @RequestParam("aptSizeMin") int aptSizeMin,
-                         @RequestParam("aptSizeMax") int aptSizeMax,
-                         @RequestParam("aptTransactionType") String aptTransactionType,
-                         @RequestParam("aptPriceMin") int aptPriceMin,
-                         @RequestParam("aptPriceMax") int aptPriceMax, Model model){
-        List<Building> buildings = buildingService.findBySelection(aptName, aptSizeMin, aptSizeMax, aptTransactionType, aptPriceMin, aptPriceMax);
+    public String option(@RequestParam(value = "aptName", required = false) String aptName,
+                         @RequestParam(value = "aptSizeMin", required = false) Integer aptSizeMin,
+                         @RequestParam(value = "aptSizeMax", required = false) Integer aptSizeMax,
+                         @RequestParam(value = "aptTransactionType", required = false) String aptTransactionType,
+                         @RequestParam(value = "aptPriceMin", required = false) Integer aptPriceMin,
+                         @RequestParam(value = "aptPriceMax", required = false) Integer aptPriceMax, Model model){
+
+        if(aptName == null)aptName = "";
+        if(aptSizeMin == null)aptSizeMin = -1;
+        if(aptSizeMax == null)aptSizeMax = 1000000;
+        if(aptTransactionType == null)aptTransactionType = "";
+        if(aptPriceMin == null)aptPriceMin = -1;
+        if(aptPriceMax == null)aptPriceMax = 1000000;
+
+        List<Building> buildings = buildingService.findBySelection(aptName, aptSizeMin.intValue(), aptSizeMax.intValue(), aptTransactionType, aptPriceMin.intValue(), aptPriceMax.intValue());
         model.addAttribute("buildings", buildings);
 
         return "home";

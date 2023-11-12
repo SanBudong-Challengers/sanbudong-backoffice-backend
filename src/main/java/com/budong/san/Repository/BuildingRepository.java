@@ -15,7 +15,6 @@ public interface BuildingRepository{
     List<Building> findAll();
     void deleteOne(Long bno);
     List<Building> findBySelection(String aptName, int aptSizeMin,int aptSizeMax, String aptTransactionType, int aptPriceMin, int aptPriceMax);
-
     /*List<Building> findByName(String aptName);
     List<Building> findByAptSize(int aptSize);
     List<Building> findByTransactionType(String aptTransactionType);
