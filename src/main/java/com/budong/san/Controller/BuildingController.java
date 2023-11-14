@@ -49,11 +49,6 @@ public class BuildingController {
         return buildings;
     }
 
-    @GetMapping("/add")
-    public String addForm(){
-        return "addForm";
-    }
-
     @PostMapping("/add")
     public String add(BuildingForm buildingForm) {
         Building building = new Building();
@@ -74,14 +69,6 @@ public class BuildingController {
 
         buildingService.join(building);
         return "redirect:/";
-    }
-
-    @GetMapping("/{bno}/edit")
-    public String editForm(@PathVariable("bno") Long bno, Model model){
-        Building building = buildingService.findByBno(bno);
-        model.addAttribute(building);
-
-        return "editForm";
     }
 
     @PutMapping("/{bno}/edit")

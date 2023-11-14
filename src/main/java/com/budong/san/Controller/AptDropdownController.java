@@ -33,8 +33,6 @@ public class AptDropdownController {
     @ResponseBody
     private List<AptDropdown> getApt(){
         List<AptDropdown> aptDropdownList = aptdropdownService.findAparts();
-//        model.addAttribute("aptDropdown",aptDropdownList);
-//        System.out.println(aptDropdownList);
         return aptDropdownList;
     }
 }
