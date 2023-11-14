@@ -16,3 +16,7 @@ ownerMobileCarrier varchar(10) not null,
 constraint building_PK primary key(bno)
 );
 
+CREATE TABLE `budongsan`.`aptdropdown` (
+  `idApt` BIGINT NOT NULL AUTO_INCREMENT,
+  `aptName` VARCHAR(100) NULL,
+  PRIMARY KEY (`idApt`));

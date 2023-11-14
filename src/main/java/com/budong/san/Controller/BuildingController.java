@@ -22,19 +22,20 @@ public class BuildingController {
     }
 
     @GetMapping("/")
-    public String home(Model model){
+    @ResponseBody
+    public List<Building> home(){
         List<Building> buildings = buildingService.findBuildings();
-        model.addAttribute("buildings", buildings);
-        return "home";
+        return buildings;
     }
 
     @GetMapping("/option")
-    public String option(@RequestParam(value = "aptName", required = false) String aptName,
+    @ResponseBody
+    public List<Building> option(@RequestParam(value = "aptName", required = false) String aptName,
                          @RequestParam(value = "aptSizeMin", required = false) Integer aptSizeMin,
                          @RequestParam(value = "aptSizeMax", required = false) Integer aptSizeMax,
                          @RequestParam(value = "aptTransactionType", required = false) String aptTransactionType,
                          @RequestParam(value = "aptPriceMin", required = false) Integer aptPriceMin,
-                         @RequestParam(value = "aptPriceMax", required = false) Integer aptPriceMax, Model model){
+                         @RequestParam(value = "aptPriceMax", required = false) Integer aptPriceMax){
 
         if(aptName == null)aptName = "";
         if(aptSizeMin == null)aptSizeMin = -1;
@@ -44,9 +45,8 @@ public class BuildingController {
         if(aptPriceMax == null)aptPriceMax = 1000000;
 
         List<Building> buildings = buildingService.findBySelection(aptName, aptSizeMin.intValue(), aptSizeMax.intValue(), aptTransactionType, aptPriceMin.intValue(), aptPriceMax.intValue());
-        model.addAttribute("buildings", buildings);
 
-        return "home";
+        return buildings;
     }
 
     @GetMapping("/add")
