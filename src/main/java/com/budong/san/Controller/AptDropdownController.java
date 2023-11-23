@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api(tags="AptDropdown Controller")
-@Controller
+@RestController
 public class AptDropdownController {
     private final AptdropdownService aptdropdownService;
 
@@ -21,7 +21,6 @@ public class AptDropdownController {
     }
 
     @PostMapping("/addApt")
-    @ResponseBody
     private AptDropdown addApt(@RequestParam String aptName){
         AptDropdown aptDropdown = new AptDropdown();
         aptDropdown.setAptName(aptName);
@@ -30,7 +29,6 @@ public class AptDropdownController {
     }
 
     @GetMapping("/getApt")
-    @ResponseBody
     private List<AptDropdown> getApt(){
         List<AptDropdown> aptDropdownList = aptdropdownService.findAparts();
         return aptDropdownList;

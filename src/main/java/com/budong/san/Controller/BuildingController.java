@@ -4,6 +4,7 @@ import com.budong.san.Domain.Building;
 import com.budong.san.Service.BuildingService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Api(tags="Building Controller")
-@Controller
+@RestController
 public class BuildingController {
     private final BuildingService buildingService;
 
@@ -22,14 +23,18 @@ public class BuildingController {
     }
 
     @GetMapping("/")
-    @ResponseBody
     public List<Building> home(){
         List<Building> buildings = buildingService.findBuildings();
         return buildings;
     }
 
+    @GetMapping("/find/{bno}")
+    public Building find(@PathVariable("bno") Long bno){
+        Building building = buildingService.findByBno(bno);
+        return building;
+    }
+
     @GetMapping("/option")
-    @ResponseBody
     public List<Building> option(@RequestParam(value = "aptName", required = false) String aptName,
                          @RequestParam(value = "aptSizeMin", required = false) Integer aptSizeMin,
                          @RequestParam(value = "aptSizeMax", required = false) Integer aptSizeMax,
@@ -50,7 +55,7 @@ public class BuildingController {
     }
 
     @PostMapping("/add")
-    public String add(BuildingForm buildingForm) {
+    public ResponseEntity add(BuildingForm buildingForm) {
         Building building = new Building();
 
         building.setAptName(buildingForm.getAptName());
@@ -68,14 +73,17 @@ public class BuildingController {
         building.setOwnerMobileCarrier(buildingForm.getOwnerMobileCarrier());
 
         buildingService.join(building);
-        return "redirect:/";
+        return ResponseEntity.ok().body("add success");
     }
 
     @PutMapping("/{bno}/edit")
-    public String edit(@PathVariable("bno") Long bno, BuildingForm buildingForm) {
+    public Building edit(@PathVariable("bno") Long bno, BuildingForm buildingForm) {
         Building building = buildingService.findByBno(bno);
 
-        building.setAptName(buildingForm.getAptName());
+        if(buildingForm.getAptName() == null)
+            building.setAptName(building.getAptName());
+        else
+            building.setAptName(buildingForm.getAptName());
         building.setAptDong(buildingForm.getAptDong());
         building.setAptHo(buildingForm.getAptHo());
         building.setAptType(buildingForm.getAptType());
@@ -91,12 +99,13 @@ public class BuildingController {
 
         buildingService.edit(building);
 
-        return "redirect:/";
+        return building;
     }
 
     @DeleteMapping("/{bno}/delete")
-    public String delete(@PathVariable("bno") Long bno){
+    public ResponseEntity delete(@PathVariable("bno") Long bno){
         buildingService.deleteOne(bno);
-        return "redirect:/";
+
+        return ResponseEntity.ok().body("delete success");
     }
 }
