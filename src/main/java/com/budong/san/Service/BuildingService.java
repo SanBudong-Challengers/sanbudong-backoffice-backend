@@ -2,7 +2,6 @@ package com.budong.san.Service;
 
 import com.budong.san.Domain.Building;
 import com.budong.san.Repository.BuildingRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -29,8 +28,8 @@ public class BuildingService {
         return buildingRepository.findByBno(bno);
     }
 
-    public List<Building> findBuildings(){
-        return buildingRepository.findAll();
+    public List<Building> findBuildings(Integer page){
+        return buildingRepository.findAll(page);
     }
 
     public void deleteOne(Long bno){

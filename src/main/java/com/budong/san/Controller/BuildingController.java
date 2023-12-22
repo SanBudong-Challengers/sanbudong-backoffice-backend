@@ -5,12 +5,9 @@ import com.budong.san.Service.BuildingService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Api(tags="Building Controller")
 @RestController
@@ -23,8 +20,11 @@ public class BuildingController {
     }
 
     @GetMapping("/")
-    public List<Building> home(){
-        List<Building> buildings = buildingService.findBuildings();
+    public List<Building> home(@RequestParam(value = "page", required = false) Integer page){
+        if(page == null) page = 0;
+        page = page*10;
+//        PageRequest pageRequest = PageRequest.of(page,10);
+        List<Building> buildings = buildingService.findBuildings(page);
         return buildings;
     }
 

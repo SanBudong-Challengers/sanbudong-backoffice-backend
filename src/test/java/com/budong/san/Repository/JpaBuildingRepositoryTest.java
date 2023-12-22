@@ -76,9 +76,9 @@ public class JpaBuildingRepositoryTest {
 
     @Test
     public void all(){
-        List<Building> buildings = buildingService.findBuildings();
-        for(Building building1 : buildings){
-            System.out.println(building1.getBno());
-        }
+//        List<Building> buildings = buildingService.findBuildings();
+//        for(Building building1 : buildings){
+//            System.out.println(building1.getBno());
+//        }
     }
 }

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 public class JpaBuildingRepository implements BuildingRepository {
 
@@ -44,8 +43,11 @@ public class JpaBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public List<Building> findAll() {
-        return em.createQuery("select b from Building b", Building.class).getResultList();
+    public List<Building> findAll(Integer page) {
+        return em.createQuery("select b from Building b", Building.class)
+                .setFirstResult(page)
+                .setMaxResults(10)
+                .getResultList();
     }
 
     @Override
