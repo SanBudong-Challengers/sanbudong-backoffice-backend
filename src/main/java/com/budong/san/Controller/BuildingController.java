@@ -84,18 +84,66 @@ public class BuildingController {
             building.setAptName(building.getAptName());
         else
             building.setAptName(buildingForm.getAptName());
-        building.setAptDong(buildingForm.getAptDong());
-        building.setAptHo(buildingForm.getAptHo());
-        building.setAptType(buildingForm.getAptType());
-        building.setAptSize(buildingForm.getAptSize());
-        building.setAptDirection(buildingForm.getAptDirection());
-        building.setAptTransactionType(buildingForm.getAptTransactionType());
-        building.setAptPrice(buildingForm.getAptPrice());
-        building.setAptOption(buildingForm.getAptOption());
-        building.setAptNote(buildingForm.getAptNote());
-        building.setOwnerName(buildingForm.getOwnerName());
-        building.setOwnerPhone(buildingForm.getOwnerPhone());
-        building.setOwnerMobileCarrier(buildingForm.getOwnerMobileCarrier());
+
+        if(buildingForm.getAptDong() == null)
+            building.setAptDong(building.getAptDong());
+        else
+            building.setAptDong(buildingForm.getAptDong());
+
+        if(buildingForm.getAptHo() == null)
+            building.setAptHo(building.getAptHo());
+        else
+            building.setAptHo(buildingForm.getAptHo());
+
+        if(buildingForm.getAptType() == null)
+            building.setAptType(building.getAptType());
+        else
+            building.setAptType(buildingForm.getAptType());
+
+        if(buildingForm.getAptSize() == 0)
+            building.setAptSize(building.getAptSize());
+        else
+            building.setAptSize(buildingForm.getAptSize());
+
+        if(buildingForm.getAptDirection() == null)
+            building.setAptDirection(building.getAptDirection());
+        else
+            building.setAptDirection(buildingForm.getAptDirection());
+
+        if(buildingForm.getAptTransactionType() == null)
+            building.setAptTransactionType(building.getAptTransactionType());
+        else
+            building.setAptTransactionType(buildingForm.getAptTransactionType());
+
+        if(buildingForm.getAptPrice() == 0)
+            building.setAptPrice(building.getAptPrice());
+        else
+            building.setAptPrice(buildingForm.getAptPrice());
+
+        if(buildingForm.getAptOption() == null)
+            building.setAptOption(building.getAptOption());
+        else
+            building.setAptOption(buildingForm.getAptOption());
+
+        if(buildingForm.getAptNote() == null)
+            building.setAptNote(building.getAptNote());
+        else
+            building.setAptNote(buildingForm.getAptNote());
+
+        if(buildingForm.getOwnerName() == null)
+            building.setOwnerName(building.getOwnerName());
+        else
+            building.setOwnerName(buildingForm.getOwnerName());
+
+        if(buildingForm.getOwnerPhone() == null)
+            building.setOwnerPhone(building.getOwnerPhone());
+        else
+            building.setOwnerPhone(buildingForm.getOwnerPhone());
+
+        if(buildingForm.getOwnerMobileCarrier() == null)
+            building.setOwnerMobileCarrier(building.getOwnerMobileCarrier());
+        else
+            building.setOwnerMobileCarrier(buildingForm.getOwnerMobileCarrier());
 
         buildingService.edit(building);
 
