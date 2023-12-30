@@ -2,14 +2,13 @@ package com.budong.san.Controller;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.budong.san.Domain.S3Url;
+import com.budong.san.Service.S3UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,6 +19,7 @@ import java.io.IOException;
 public class FileUploadController {
 
     private final AmazonS3Client amazonS3Client;
+    private final S3UrlService s3UrlService;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -27,13 +27,20 @@ public class FileUploadController {
     @PostMapping
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            String fileName=file.getOriginalFilename();
-//            String fileUrl= "https://" + bucket + "/test" +fileName;
-            String fileUrl= "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" +fileName;
-            ObjectMetadata metadata= new ObjectMetadata();
+            String fileName = file.getOriginalFilename();
+            String fileUrl = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" + fileName;
+
+            ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
-            amazonS3Client.putObject(bucket,fileName,file.getInputStream(),metadata);
+
+            amazonS3Client.putObject(bucket, fileName, file.getInputStream(), metadata);
+
+            S3Url s3Url = new S3Url();
+            s3Url.setUrl(fileUrl);
+
+            s3UrlService.saveUrl(s3Url);
+
             return ResponseEntity.ok(fileUrl);
         } catch (IOException e) {
             e.printStackTrace();
