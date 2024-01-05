@@ -14,4 +14,5 @@ import javax.persistence.JoinColumn;
 public class S3Url {
     @Id
     private String url;
+    private Long bno;
 }

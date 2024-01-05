@@ -43,6 +43,13 @@ public class JpaBuildingRepository implements BuildingRepository {
     }
 
     @Override
+    public Long count() {
+        String query = "select count(b.bno) from Building b";
+        Long val = em.createQuery(query, Long.class).getSingleResult();
+        return val;
+    }
+
+    @Override
     public List<Building> findAll(Integer page) {
         return em.createQuery("select b from Building b", Building.class)
                 .setFirstResult(page)
@@ -66,7 +73,7 @@ public class JpaBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public List<Building> findBySelection(String aptName, int aptSizeMin, int aptSizeMax, String aptTransactionType, int aptPriceMin, int aptPriceMax) {
+    public List<Building> findBySelection(String aptName, double aptSizeMin, double aptSizeMax, String aptTransactionType, int aptPriceMin, int aptPriceMax, int page) {
         String sql = "select b from Building b where b.aptSize >= :aptSizeMin and b.aptSize <= :aptSizeMax and b.aptPrice >= :aptPriceMin and b.aptPrice <= :aptPriceMax";
         int check = 0;
 
@@ -90,6 +97,8 @@ public class JpaBuildingRepository implements BuildingRepository {
                     .setParameter("aptPriceMax", aptPriceMax)
                     .setParameter("aptName", aptName)
                     .setParameter("aptTransactionType", aptTransactionType)
+                    .setFirstResult(page)
+                    .setMaxResults(10)
                     .getResultList();
         else if (name == 1)
             return em.createQuery(sql, Building.class)
@@ -98,6 +107,8 @@ public class JpaBuildingRepository implements BuildingRepository {
                     .setParameter("aptPriceMin", aptPriceMin)
                     .setParameter("aptPriceMax", aptPriceMax)
                     .setParameter("aptName", aptName)
+                    .setFirstResult(page)
+                    .setMaxResults(10)
                     .getResultList();
         else if (tt == 1)
             return em.createQuery(sql, Building.class)
@@ -106,6 +117,8 @@ public class JpaBuildingRepository implements BuildingRepository {
                     .setParameter("aptPriceMin", aptPriceMin)
                     .setParameter("aptPriceMax", aptPriceMax)
                     .setParameter("aptTransactionType", aptTransactionType)
+                    .setFirstResult(page)
+                    .setMaxResults(10)
                     .getResultList();
         else
             return em.createQuery(sql, Building.class)
@@ -113,6 +126,8 @@ public class JpaBuildingRepository implements BuildingRepository {
                     .setParameter("aptSizeMax", aptSizeMax)
                     .setParameter("aptPriceMin", aptPriceMin)
                     .setParameter("aptPriceMax", aptPriceMax)
+                    .setFirstResult(page)
+                    .setMaxResults(10)
                     .getResultList();
 
     }

@@ -36,7 +36,11 @@ public class BuildingService {
         buildingRepository.deleteOne(bno);
     }
 
-    public List<Building> findBySelection(String aptName, int aptSizeMin, int aptSizeMax, String aptTransactionType, int aptPriceMin, int aptPriceMax){
-        return buildingRepository.findBySelection(aptName, aptSizeMin, aptSizeMax, aptTransactionType, aptPriceMin, aptPriceMax);
+    public List<Building> findBySelection(String aptName, double aptSizeMin, double aptSizeMax, String aptTransactionType, int aptPriceMin, int aptPriceMax, int page){
+        return buildingRepository.findBySelection(aptName, aptSizeMin, aptSizeMax, aptTransactionType, aptPriceMin, aptPriceMax, page);
+    }
+
+    public Long count(){
+        return buildingRepository.count();
     }
 }

@@ -10,7 +10,8 @@ public interface BuildingRepository{
     Building findByBno(Long bno);
     List<Building> findAll(Integer page);
     void deleteOne(Long bno);
-    List<Building> findBySelection(String aptName, int aptSizeMin,int aptSizeMax, String aptTransactionType, int aptPriceMin, int aptPriceMax);
+    List<Building> findBySelection(String aptName, double aptSizeMin,double aptSizeMax, String aptTransactionType, int aptPriceMin, int aptPriceMax, int page);
+    Long count();
     /*List<Building> findByName(String aptName);
     List<Building> findByAptSize(int aptSize);
     List<Building> findByTransactionType(String aptTransactionType);

@@ -18,7 +18,7 @@ public class Building {
     private String aptDong;
     private String aptHo;
     private String aptType;
-    private int aptSize;
+    private double aptSize;
     private String aptDirection;
     private String aptTransactionType;
     private int aptPrice;
