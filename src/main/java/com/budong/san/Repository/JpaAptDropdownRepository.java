@@ -22,16 +22,32 @@ public class JpaAptDropdownRepository implements AptDropdownRepository{
 
     @Override
     public AptDropdown edit(AptDropdown aptDropdown) {
-        return null;
+        em.createQuery("update AptDropdown a set a.aptName = :aptName where a.idApt = :idApt")
+                .setParameter("aptName", aptDropdown.getAptName())
+                .setParameter("idApt",aptDropdown.getIdApt())
+                .executeUpdate();
+        return aptDropdown;
     }
 
     @Override
-    public List<AptDropdown> findAll() {
-        return em.createQuery("select a from AptDropdown a", AptDropdown.class).getResultList();
+    public List<AptDropdown> findAll(Integer page) {
+        return em.createQuery("select a from AptDropdown a", AptDropdown.class)
+                .setFirstResult(page)
+                .setMaxResults(10)
+                .getResultList();
+    }
+
+    @Override
+    public AptDropdown findByIdApt(Long idApt) {
+        return em.createQuery("select a from AptDropdown a where a.idApt = :idApt", AptDropdown.class)
+                .setParameter("idApt", idApt)
+                .getSingleResult();
     }
 
     @Override
     public void deleteOne(Long idApt) {
-
+        em.createQuery("delete from AptDropdown a where a.idApt = :idApt")
+                .setParameter("idApt", idApt)
+                .executeUpdate();
     }
 }

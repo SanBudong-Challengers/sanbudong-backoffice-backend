@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.Cookie;
 import java.io.IOException;
@@ -29,32 +30,32 @@ public class FileUploadController {
     private String bucket;
 
     @PostMapping("/{bno}")
-    public ResponseEntity<String> uploadFile(@CookieValue(value = "myCookie", required = false) Cookie cookie,
+    public ResponseEntity<String> uploadFile(@ApiIgnore @CookieValue(value = "myCookie", required = false) Cookie cookie,
                                              @RequestParam("file") MultipartFile file,
                                              @PathVariable("bno") Long bno) {
-        if (cookie == null) return null;
-        else if (cookie.getValue().toString().equals(cookieKey)) {
-            try {
-                String fileName = file.getOriginalFilename();
-                String fileUrl = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" + fileName;
+        if (cookie == null || !cookie.getValue().toString().equals(cookieKey))
+            return ResponseEntity.status(401).body("Unauthorized");
 
-                ObjectMetadata metadata = new ObjectMetadata();
-                metadata.setContentType(file.getContentType());
-                metadata.setContentLength(file.getSize());
+        try {
+            String fileName = file.getOriginalFilename();
+            String fileUrl = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" + fileName;
 
-                amazonS3Client.putObject(bucket, fileName, file.getInputStream(), metadata);
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(file.getSize());
 
-                S3Url s3Url = new S3Url();
-                s3Url.setUrl(fileUrl);
-                s3Url.setBno(bno);
+            amazonS3Client.putObject(bucket, fileName, file.getInputStream(), metadata);
 
-                s3UrlService.saveUrl(s3Url);
+            S3Url s3Url = new S3Url();
+            s3Url.setUrl(fileUrl);
+            s3Url.setBno(bno);
 
-                return ResponseEntity.ok(fileUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
-        } else return null;
+            s3UrlService.saveUrl(s3Url);
+
+            return ResponseEntity.ok(fileUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
